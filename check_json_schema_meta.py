@@ -10,7 +10,7 @@ import jsonschema
 from check_jsonschema.schema_loader import SchemaLoader
 
 
-def validate_json_file(file_path: Path, strict: bool = False) -> bool:
+def validate_json_file(file_path: Path, schema_ref_external: str = None, strict: bool = False) -> bool:
     """
     Validate a single JSON file's $schema reference.
 
@@ -33,7 +33,7 @@ def validate_json_file(file_path: Path, strict: bool = False) -> bool:
             else:
                 return True
 
-        schema_ref = data.get("$schema")
+        schema_ref = schema_ref_external or data.get("$schema")
         if not schema_ref:
             if strict:
                 print(f"❌ {file_path}: Missing '$schema' key")
